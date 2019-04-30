@@ -59,7 +59,7 @@ server.get('/links/:id', async (req, res) => {
 
 // POST
 
-server.post("/links", async (req, res) => {
+server.post("/api/links", async (req, res) => {
         console.log("link", req.body);
         try {
           const linkData = req.body;

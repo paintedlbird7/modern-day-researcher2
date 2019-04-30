@@ -10,7 +10,7 @@ module.exports = server => {
   server.post('/api/register', register);
   server.post('/api/login', login);
   server.get('/api/links', authenticate, 
-  // getLinks
+  getLinks
   );
 };
 
@@ -58,17 +58,17 @@ function login(req, res) {
 }
 
 
-// function getLinks(req, res) {
-//   const requestOptions = {
-//     headers: { accept: 'application/json' },
-//   };
+function getLinks(req, res) {
+  const requestOptions = {
+    headers: { accept: 'application/json' },
+  };
 
-//   axios
-//     .get('https://icanhazdadjoke.com/search', requestOptions)
-//     .then(response => {
-//       res.status(200).json(response.data.results);
-//     })
-//     .catch(err => {
-//       res.status(500).json({ message: 'Error fetching inks', error: err });
-//     });
-// }
+  axios
+    .get('https://icanhazdadjoke.com/search', requestOptions)
+    .then(response => {
+      res.status(200).json(response.data.results);
+    })
+    .catch(err => {
+      res.status(500).json({ message: 'Error fetching inks', error: err });
+    });
+}
