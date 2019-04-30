@@ -17,26 +17,26 @@ const morgan = require('morgan');
 server.use(morgan());
 // const knexConfig = require('./knexfile.js');
 // const db = knex(knexConfig.development);
+const Links = require('../db-functions');
+const db = require('../database/dbConfig.js');
 
 
-// GET 
+// GET
+// gets 200 OK with emtpy array
+server.get('/', async(req,res)=>{
+  try{
+    const links = await db('links')
+    res.status(200).json(links);
+  }catch(error){
+    res.status(500).json(error);
+  }
 
-server.get('/links', async (req, res) => {
-    try {
-      const links = await Links.find(req.query);
-      res.status(200).json(links);
-    } catch (error) {
-      // log error to database
-      console.log(error);
-      res.status(500).json({
-        message: 'Error retrieving the links',
-      });
-    }
-  });
+
+
 
 
 // GET BY ID 
-
+// gets 200 OK with emtpy array
 server.get('/links/:id', async (req, res) => {
     try {
       const link = await Links.findById(req.params.id);
@@ -57,28 +57,20 @@ server.get('/links/:id', async (req, res) => {
 
 
 
+
+
 // POST
-
-server.post("/api/links", async (req, res) => {
-        console.log("link", req.body);
-        try {
-          const linkData = req.body;
-          const linkId = await Links.insert(linkData);
-          const link = await Links.findById(linkId.id);
-          res.status(201).json(link);
-        } catch (error) {
-          let message = "There was an error while saving the link to the database";
-      
-          if (error.errno === 19) {
-            message = "please provide both the name and the link";
-          }
-          res.status(500).json({ message: message, error });
-        }
-      });
+// working
+server.post('/links', (req, res) => {  
+  const link = req.body;
+     db('links').insert(link)
+      .then(res.status(200).json(link))
+      .catch (error => 
+      res.status(500).json({ message: message, error })
+      );
+});
 
 
-
-  
 
 // DELTETE
 
