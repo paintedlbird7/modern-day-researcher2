@@ -7,7 +7,7 @@
 
 
 
-// router.get('/links', async (req, res) => {
+// router.get('/', async (req, res) => {
 //     try {
 //       const links = await Links.find(req.query);
 //       res.status(200).json(links);

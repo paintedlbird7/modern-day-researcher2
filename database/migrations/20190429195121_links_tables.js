@@ -1,17 +1,21 @@
-exports.up = function(knex, Promise) {
+ exports.up = function(knex, Promise) {
     return knex.schema.createTable('links', function(tbl) {
     
     tbl.increments()
-    tbl.string('name');
     // tbl.boolean('completed');
+    tbl.string('link');
     tbl.string('description');
+    tbl.string('name')
+    .notNullable();
 
-    tbl.integer('user_id')
-    .unsigned()
-    .references('id')
-    .inTable('user-info-links')
-    .onDelete('CASCADE')
-    .onUpdate('CASCADE');
+
+
+    // tbl.integer('user_id')
+    // .unsigned()
+    // .references('id')
+    // .inTable('user-info-links')
+    // .onDelete('CASCADE')
+    // .onUpdate('CASCADE');
     
     // tbl.integer('user_id')
     // .notNullable()
@@ -19,19 +23,19 @@ exports.up = function(knex, Promise) {
     // .inTable('users');
     
     
-    tbl.string('link')
-    .notNullable();
+//     tbl.string('link')
+//     .notNullable();
     
-    tbl.string('category')
-    .notNullable();
+//     tbl.string('category')
+//     .notNullable();
 
-    tbl.string('created')
-    .notNullable();
+//     tbl.string('created')
+//     .notNullable();
     
-    tbl
-    .string('title',128)
-    .notNullable()
-    .unique()
+//     tbl
+//     .string('title',128)
+//     .notNullable()
+//     .unique()
     })
   }
 

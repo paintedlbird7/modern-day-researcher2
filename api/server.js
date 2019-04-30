@@ -18,25 +18,36 @@ server.use(morgan());
 // const knexConfig = require('./knexfile.js');
 // const db = knex(knexConfig.development);
 const Links = require('../db-functions');
-const db = require('../database/dbConfig.js');
+// const db = require('../database/dbConfig.js');
 
 
-// GET
-// gets 200 OK with emtpy array
-server.get('/', async(req,res)=>{
+// sanity check
+server.get('/', (req, res) => {
+  res.send(`
+    it's working!
+  `);
+});
+
+
+
+// // GET
+// working
+server.get('/links', async (req,res)=>{
   try{
-    const links = await db('links')
+    const links = await Links.find();
     res.status(200).json(links);
-  }catch(error){
-    res.status(500).json(error);
-  }
+    // const link = await db('links')
+    // res.status(200).json(link);
+  }catch(error){res.status(500).json({
+            message: 'Error retrieving the links',
+          });
+}
+})
 
 
 
-
-
-// GET BY ID 
-// gets 200 OK with emtpy array
+// // GET BY ID 
+// working
 server.get('/links/:id', async (req, res) => {
     try {
       const link = await Links.findById(req.params.id);
@@ -59,22 +70,24 @@ server.get('/links/:id', async (req, res) => {
 
 
 
-// POST
+
+// // POST
 // working
-server.post('/links', (req, res) => {  
+server.post('/post/links', (req, res) => {  
   const link = req.body;
-     db('links').insert(link)
+     Links.insert(link)
       .then(res.status(200).json(link))
       .catch (error => 
       res.status(500).json({ message: message, error })
       );
 });
 
+  
 
 
-// DELTETE
-
-server.delete('/:id', async (req, res) => {
+// // DELTETE
+// working
+server.delete('/links/:id', async (req, res) => {
         try {
           const count = await Links.remove(req.params.id);
           if (count > 0) {
@@ -92,9 +105,9 @@ server.delete('/:id', async (req, res) => {
       });
       
     
-// PUT / UPDATE
-
-server.put('/:id', async (req, res) => {
+// // PUT / UPDATE
+// working
+server.put('/links/:id', async (req, res) => {
     try {
       const link = await Links.update(req.params.id, req.body);
       if (link) {

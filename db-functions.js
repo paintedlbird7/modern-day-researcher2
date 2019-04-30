@@ -17,7 +17,9 @@ function find() {
 }
 
 function findById(id) {
-  return db('links').where({ id: Number(id) });
+  return db('links')
+  .where({id: (id) })
+  .first();
 }
 
 function insert(link) {
@@ -28,13 +30,13 @@ function insert(link) {
 
 function update(id, link) {
   return db('links')
-    .where('id', Number(id))
+    .where('id', (id))
     .update(link);
 }
 
 function remove(id) {
   return db('links')
-    .where('id', Number(id))
+    .where('id',(id))
     .del();
 }
 
@@ -51,7 +53,6 @@ function remove(id) {
 //   find,
 //   findBy,
 //   findById,
-//   findMain
 // };
 
 // function find() {
